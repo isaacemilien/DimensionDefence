@@ -11,6 +11,14 @@ public class DroneController : MonoBehaviour, IMoveable, IDamageable
     {
         Move();
     }
+    private void Update()
+    {
+        if(droneHealth <= 0)
+        {
+            Debug.Log("Drone killed");
+            this.gameObject.SetActive(false);
+        }
+    }
     public void Move()
     {
         NavMeshAgent agent = GetComponent<NavMeshAgent>();

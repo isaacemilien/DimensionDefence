@@ -7,6 +7,7 @@ public class GuardController : MonoBehaviour
     #region ATTRIBUTES
     float time;
     [SerializeField] float attackSpeed = 2;
+    [SerializeField] float attackDamage = 50f;
     #endregion
 
     #region MONOBEHAVIOUR METHODS
@@ -34,7 +35,7 @@ public class GuardController : MonoBehaviour
         {
             Debug.Log("Attacking!");
             time = 0;
-            return 10f;
+            return attackDamage;
         }
         else
         {
