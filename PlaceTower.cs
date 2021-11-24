@@ -29,7 +29,8 @@ public class PlaceTower : MonoBehaviour
                 Transform objectHit = hit.transform;
                 if(objectHit.tag == "PlaceBlock")
                 {
-                    Instantiate(tower, objectHit.transform.position, Quaternion.identity);
+                    //Instantiate(tower, objectHit.transform.position, Quaternion.identity);
+                    tower.transform.position = new Vector3(objectHit.position.x, objectHit.position.y + 1, objectHit.position.z);
                 }
             }
         }
