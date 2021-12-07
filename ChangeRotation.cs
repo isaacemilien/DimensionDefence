@@ -4,87 +4,37 @@ using UnityEngine;
 
 public class ChangeRotation : MonoBehaviour
 {
-    #region FIELDS
-    Vector3 mouseDownPosition;
-    Vector3 mouseUpPosition;
+    #region ATTRIBUTES  
+    float timeCount;
+    [SerializeField] float slowTime = 0.02f;
 
-    bool clicked = false;
+    float currentAngle = 0;
 
-    bool shouldRotate = false;
 
-    float rotationAngle = 90;
     #endregion
 
-    #region MONOBEHAVIOUR METHODS 
-    void Start()
-    {
-    }
-	
+    #region MONOBEHAVIOUR METHODS
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && transform.eulerAngles.x == currentAngle % 360)
         {
-            shouldRotate = true;
+            currentAngle += 90f;
+            timeCount = 0;
         }
-        RotateDown();
+        if (transform.eulerAngles.x != currentAngle % 360)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(currentAngle, 0, 0), timeCount);
+            timeCount += Time.deltaTime * slowTime;
+            Debug.Log("sadfasdfasdfafaddfasdfsadfafas");
 
-        Debug.Log(transform.eulerAngles.x);
-
+            Debug.Log(transform.eulerAngles.x);
+            Debug.Log(currentAngle);
+        }
     }
     #endregion
-    void RotateOnClick()
-    {
 
-        if (Input.GetMouseButton(0))
-        {
-            //transform.Rotate(1.0f, 0.0f, 0.0f, Space.World);
-            Debug.Log(transform.eulerAngles.x);
-        }
-    }
+    #region METHODS
 
-    void RotateDown()
-    {
-        if (shouldRotate)
-        {       
-            if (transform.eulerAngles.x < 180)
-            {
-                transform.Rotate(90f, 0.0f, 0.0f, Space.World);
-            }
-            else
-            {
-                shouldRotate = false;
-                rotationAngle += 90;
-            }
-        }
-
-    }
-
-    void MouseDirection()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            mouseDownPosition = Input.mousePosition;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            mouseUpPosition = Input.mousePosition;
-            clicked = true;
-        }
-
-        if (clicked && (mouseDownPosition.y < mouseUpPosition.y))
-        {
-            Debug.Log("Moved mouse up");
-            clicked = false;
-        }
-        else if (clicked && (mouseDownPosition.y > mouseUpPosition.y))
-        {
-            Debug.Log("Moved mouse down");
-            clicked = false;
-        }
-    }
-
-
-        
-    #region METHODS 
     #endregion
 }
