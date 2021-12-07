@@ -10,8 +10,9 @@ public class ChangeRotation : MonoBehaviour
 
     bool clicked = false;
 
-    float time;
+    bool shouldRotate = false;
 
+    float rotationAngle = 90;
     #endregion
 
     #region MONOBEHAVIOUR METHODS 
@@ -21,32 +22,41 @@ public class ChangeRotation : MonoBehaviour
 	
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            clicked = true;
+            shouldRotate = true;
         }
+        RotateDown();
 
-        if (clicked)
-        {
-            time += Time.deltaTime;
-            if (transform.rotation.x > 10)
-            {
-                time = 0;
-                clicked = false;
-            }
-            else
-            {
-                transform.Rotate(.3f, 0.0f, 0.0f, Space.World);
-            }
-        }
+        Debug.Log(transform.eulerAngles.x);
+
     }
     #endregion
     void RotateOnClick()
     {
+
         if (Input.GetMouseButton(0))
         {
-            transform.Rotate(1.0f, 0.0f, 0.0f, Space.World);
+            //transform.Rotate(1.0f, 0.0f, 0.0f, Space.World);
+            Debug.Log(transform.eulerAngles.x);
         }
+    }
+
+    void RotateDown()
+    {
+        if (shouldRotate)
+        {       
+            if (transform.eulerAngles.x < 180)
+            {
+                transform.Rotate(90f, 0.0f, 0.0f, Space.World);
+            }
+            else
+            {
+                shouldRotate = false;
+                rotationAngle += 90;
+            }
+        }
+
     }
 
     void MouseDirection()
